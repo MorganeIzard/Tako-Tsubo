@@ -1,5 +1,7 @@
 library(ggplot2)
 library(ggside)
+library(officer)
+library(rvg)
 pc <- read.table("pca_d.eigenvec")
 info <- read.table("donnee_out.fam")
 
@@ -21,16 +23,30 @@ merg[merg$SEX == 1, "sex" ] <- "Male"
 merg$state <- "Affected"
 merg[merg$PHENO == 1, "state" ] <- "Unaffected"
 
+pca <- ggplot(merg, aes(PC1, PC2, color = state)) + 
+  geom_point() +
+  ggtitle("ACP cohorte")+
+  geom_xsidedensity(aes(y = after_stat(density))) +
+  geom_ysidedensity(aes(x = after_stat(density))) +
+  geom_line(aes( y = 0.0686803), col = "blue")+
+  geom_line(aes( x = -0.0196231), col = "blue")+
+  theme()
+doc <- read_pptx()
+edit <- dml(ggobj = pca)
+doc <- add_slide(doc)
+doc <- ph_with(doc, edit,
+               location = ph_location_type(type = "body") )
+print(doc, "PCA_cohorte.pptx")
 
-pdf("PCA_cohorte.pdf")
-plot(merg$PC1,merg$PC2, col = merg$colpheno, pch = 19, xlab = "PC1", ylab = "PC2", main = "ACP cohorte")
-legend(-0.15, -0.10, legend = c("Affected", "Unaffected"), 
-       col= c("firebrick", "forestgreen"),
-       pch = 19)
-abline(h = 0.0686803, v = -0.0196231, col = "blue")
-dev.off()
-
-identify(merg$PC1,merg$PC2,labels = rownames(merg))
+############# SANS GGPLOT ############# 
+#pdf("PCA_cohorte.pdf")
+#test <- plot_instr(plot(merg$PC1,merg$PC2, col = merg$colpheno, pch = 19, xlab = "PC1", ylab = "PC2", main = "ACP cohorte"),
+#  legend(-0.15, -0.10, legend = c("Affected", "Unaffected"), 
+#       col= c("firebrick", "forestgreen"),
+#       pch = 19),
+#  abline(h = 0.0686803, v = -0.0196231, col = "blue"))
+#dev.off()
+#identify(merg$PC1,merg$PC2,labels = rownames(merg))
 
 
 smol1 <- merg[merg$PC1 <= -0.0196231,]
