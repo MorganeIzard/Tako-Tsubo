@@ -1,4 +1,3 @@
-setwd("/home/u1166/Documents/New")
 library(data.table)
 
 tako <- fread("TAKOGENE_ANSI_20180711.csv")
