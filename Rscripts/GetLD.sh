@@ -1,6 +1,6 @@
 rm -f ALL_SIGNALS.LD.txt
-VCF_DIR="."
-for CHR in `cut -f1 TopSNP_CHR_POS.txt | sort | uniq | grep -v CHR | grep 21`
+VCF_DIR="/home/u1166/Documents/impute5_v1.1.5/impute5_v1.1.5/1000G"
+for CHR in `cut -f1 TopSNP_CHR_POS.txt | sort | uniq | grep -v CHR`
 do
  	if test -f "${VCF_DIR}/ALL.chr${CHR}.phase3_shapeit2_mvncall_integrated_v5b.20130502.genotypes.vcf.gz"; then
  		echo ${VCF_DIR}/ALL.chr${CHR}.phase3_shapeit2_mvncall_integrated_v5b.20130502.genotypes.vcf.gz
