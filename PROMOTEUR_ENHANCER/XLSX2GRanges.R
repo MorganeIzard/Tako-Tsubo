@@ -1,0 +1,8 @@
+library("readxl")
+library("GenomicRanges")
+I <- read_excel("41586_2015_BFnature14217_MOESM96_ESM.xlsx",skip=1)
+I<-data.frame(I)
+Enhancer.GR<-makeGRangesFromDataFrame(data.frame(chr=I[grep("LV",I$Tissues.with.Enhancer.marks),"Chromosome"],start=I[grep("LV",I$Tissues.with.Enhancer.marks),"Enhancer.location"]-100,end=I[grep("LV",I$Tissues.with.Enhancer.marks),"Enhancer.location"]+100))
+saveRDS(Enhancer.GR,"Enhancer.GR.Rds")
+Promoter.GR<-makeGRangesFromDataFrame(data.frame(chr=I[grep("LV",I$Tissues.with.Promoter.marks),"Chromosome"],start=I[grep("LV",I$Tissues.with.Promoter.marks),"Enhancer.location"]-100,end=I[grep("LV",I$Tissues.with.Promoter.marks),"Enhancer.location"]+100))
+saveRDS(Promoter.GR,"Promoter.GR.Rds")
