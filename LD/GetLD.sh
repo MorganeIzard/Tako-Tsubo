@@ -13,4 +13,5 @@ do
  	mv out.list.hap.ld chr${CHR}.LD
  	sed -e '1d' chr${CHR}.LD >> ALL_SIGNALS.LD.txt
  	rm ALL.chr${CHR}.phase3_shapeit2_mvncall_integrated_v5b.20130502.genotypes.vcf.gz EUR_only.${CHR}.recode.vcf
+ 	rm chr*
 done
